@@ -26,7 +26,7 @@ public class ChatClientCLI {
             public void run() {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                 String message;
-                String message_2 = "Aya Mahagna, Julian Farraj";
+                String submitters = "Aya Mahagna, Julian Farraj";
                 while (client.isConnected()) {
                     System.out.print(SHELL_STRING);
 
@@ -41,11 +41,10 @@ public class ChatClientCLI {
                         if (msg.get(0).equals("#send"))
                             client.sendToServer(message.substring(5));
                         else if (msg.get(0).equals("#sendSubmitters"))
-                            client.sendToServer(message_2);
+                            client.sendToServer(submitters);
                         else if (msg.get(0).equals("#exit"))
                             client.closeConnection();
                     } catch (IOException e1) {
-                        // TODO Auto-generated catch block
                         e1.printStackTrace();
                     }
                     msg = new ArrayList<>();
