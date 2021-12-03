@@ -27,7 +27,7 @@ public class ChatClientCLI {
             public void run() {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                 String message;
-                String message_2 = "Aya,Julian";
+                String message_2 = "Aya Mahagna, Julian Farraj";
                 while (client.isConnected()) {
                     System.out.print(SHELL_STRING);
 
