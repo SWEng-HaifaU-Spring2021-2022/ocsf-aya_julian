@@ -12,7 +12,7 @@ public class ChatClientCLI {
     private boolean isRunning;
     private static final String SHELL_STRING = "Enter message (or exit to quit)> ";
     private Thread loopThread;
-    private ArrayList<String> buffer = new ArrayList<>();
+    private ArrayList<String> msg = new ArrayList<>();
 
     public ChatClientCLI(SimpleChatClient client) {
         this.client = client;
@@ -32,29 +32,23 @@ public class ChatClientCLI {
 
                     try {
                         message = reader.readLine();
-
-
                         if (message.isBlank())
                             continue;
-
-                        StringTokenizer buf = new StringTokenizer(message);
-                        while (buf.hasMoreTokens()) {
-                            buffer.add(buf.nextToken());
+                        StringTokenizer tk = new StringTokenizer(message);
+                        while (tk.hasMoreTokens()) {
+                            msg.add(tk.nextToken());
                         }
-                        if (buffer.get(0).equals("#sendSubmitters"))
-                            client.sendToServer(message_2);
-                        else if (buffer.get(0).equals("#send"))
+                        if (msg.get(0).equals("#send"))
                             client.sendToServer(message.substring(5));
-                        else if (buffer.get(0).equals("#exit"))
+                        else if (msg.get(0).equals("#sendSubmitters"))
+                            client.sendToServer(message_2);
+                        else if (msg.get(0).equals("#exit"))
                             client.closeConnection();
-
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
                     }
-
-                    buffer = new ArrayList<>();
-
+                    msg = new ArrayList<>();
                 }
             }
         });
