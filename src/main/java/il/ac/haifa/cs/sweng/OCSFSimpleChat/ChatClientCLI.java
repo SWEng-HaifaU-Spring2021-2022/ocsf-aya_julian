@@ -24,6 +24,7 @@ public class ChatClientCLI {
 			public void run() {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 				String message;
+				String message_2 = "Aya,Julian";
 				while (client.isConnected()) {
 					System.out.print(SHELL_STRING);
 
@@ -32,11 +33,14 @@ public class ChatClientCLI {
 						if (message.isBlank())
 							continue;
 
-						if (message.equalsIgnoreCase("exit")) {
+						if (message.equalsIgnoreCase("#exit")) {
 							System.out.println("Closing connection.");
 								client.closeConnection();
 						} else {
-							client.sendToServer(message);
+                            if (message.equalsIgnoreCase("#sendSubmitters"))
+							client.sendToServer(message_2);
+                            else if(message.equalsIgnoreCase("#send"))
+                                client.sendToServer(message.substring(5));
 						}
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
