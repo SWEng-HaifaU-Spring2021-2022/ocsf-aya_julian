@@ -3,7 +3,9 @@ package il.ac.haifa.cs.sweng.OCSFSimpleChat;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class ChatClientCLI {
 
@@ -11,6 +13,7 @@ public class ChatClientCLI {
 	private boolean isRunning;
 	private static final String SHELL_STRING = "Enter message (or exit to quit)> ";
 	private Thread loopThread;
+	private ArrayList<String> buffer = new ArrayList<>();
 
 	public ChatClientCLI(SimpleChatClient client) {
 		this.client = client;
@@ -32,21 +35,25 @@ public class ChatClientCLI {
 						message = reader.readLine();
 						if (message.isBlank())
 							continue;
-
+						StringTokenizer buf = new StringTokenizer(message);
+						while (buf.hasMoreTokens()) {
+							buffer.add(buf.nextToken());
+						}
 						if (message.equalsIgnoreCase("#exit")) {
 							System.out.println("Closing connection.");
 								client.closeConnection();
 						} else {
                             if (message.equalsIgnoreCase("#sendSubmitters"))
 							client.sendToServer(message_2);
-                            else if(message.equalsIgnoreCase("#send"))
+                            else if(buffer.get(0).equals("#send"))
                                 client.sendToServer(message.substring(5));
 						}
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-
+					buffer = null;
+					buffer = new ArrayList<>();
 				}
 			}
 		});
